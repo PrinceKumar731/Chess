@@ -97,6 +97,8 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
     }
     cell.appendChild(draggedPiece);
     chance = chance === "b" ? "w" : "b";
+    if(chance === "w") whiteTimer();
+    else blackTimer();
   }
   draggedPiece = null;
 });
@@ -205,4 +207,30 @@ function isValidMove(curr,targCell) {
 
 
 //add timer logic
- 
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function whiteTimer() {
+  if (whiteTime > 0) {
+    whiteTime--;
+    await sleep(1000);
+    document.getElementById("white-timer").innerText = ` ${Math.floor(whiteTime/60)<10 ? "0" + Math.floor(whiteTime/60) : Math.floor(whiteTime/60)}:${(whiteTime%60).toString().padStart(2, '0')}`;
+    if(chance === "w") whiteTimer();
+  }
+}
+
+async function blackTimer() {
+  if (blackTime > 0) {
+    blackTime--;
+    await sleep(1000);
+    document.getElementById("black-timer").innerText = ` ${Math.floor(blackTime/60)<10 ? "0" + Math.floor(blackTime/60) : Math.floor(blackTime/60)}:${(blackTime%60).toString().padStart(2, '0')}`;
+    if(chance === "b") blackTimer();
+  }
+}
+
+ document.getElementById("Start").addEventListener("click", function() {
+  alert("Game started!");
+  blackTimer();
+});
