@@ -3,6 +3,8 @@ const lightSquareColor = "#eaecd3";
 const board =  [];
 
 let chance = "b";
+let whiteTime = 600; 
+let blackTime = 600;
 
 for(let i = 0; i < 8; i++) {
     board[i]=[]
@@ -200,3 +202,7 @@ function isValidMove(curr,targCell) {
   }
   return false;
 }
+
+
+//add timer logic
+ 

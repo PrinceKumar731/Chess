@@ -7,8 +7,44 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="chessboard">
-    </div>
-        <script src="script.js"></script>
-  </body>
+  <div class="app">
+    <!-- left sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">Chess</h2>
+      <nav>
+        <button>Play</button>
+        <button>Puzzles</button>
+        <button>Learn</button>
+        <button>Watch</button>
+        <button>News</button>
+        <button>Social</button>
+      </nav>
+    </aside>
+    <!-- mid panel -->
+    <main class="board-container">
+      <div id="chessboard"></div>
+    </main>
+
+    <!-- right-panel -->
+    <aside class="right-panel">
+      <h2>10 min (Rapid)</h2>
+      <button id="Start" class="start-btn">Start Game</button>
+
+      <div class="options">
+        <button>Custom Challenge</button>
+        <button>Play a Friend</button>
+        <button>Tournaments</button>
+      </div>
+
+      <div class="moves">
+        <h3>Moves</h3>
+        <div class="moves-list">
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>

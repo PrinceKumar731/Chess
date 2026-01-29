@@ -1,18 +1,108 @@
-body{
-    background-color: #2f2e2b;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-#chessboard {
-  width: 720px;
-  height: 720px;
-  border: 30px solid #4c4b4b;
-  margin: 50px auto;
+body {
+  background-color: #2f2e2b;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #262522;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar .logo {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background-color: #3a3936;
+}
+
+.board-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-panel {
+  width: 300px;
+  background-color: #262522;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.start-btn {
+  background-color: #7fa650;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.start-btn:hover {
+  background-color: #8fbf5f;
+}
+
+.options button {
+  background-color: #3a3936;
+  border: none;
+  color: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.options button:hover {
+  background-color: #4a4946;
+}
+
+.moves {
+  margin-top: auto;
+}
+
+.moves-list {
+  background-color: #1f1e1c;
+  height: 200px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow-y: auto;
 }
 
 img {
-  user-select: none;      
+  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
 }
 
