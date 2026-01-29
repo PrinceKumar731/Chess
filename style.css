@@ -1,0 +1,18 @@
+body{
+    background-color: #2f2e2b;
+}
+
+#chessboard {
+  width: 720px;
+  height: 720px;
+  border: 30px solid #4c4b4b;
+  margin: 50px auto;
+}
+
+img {
+  user-select: none;      
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
