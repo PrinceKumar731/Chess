@@ -138,12 +138,35 @@ function bishopLogic(currX,currY,targX,targY) {
   return true;
 } 
 
-function knightLogic(curr,targ) {
-
+function knightLogic(currX,currY,targX,targY) {
+  let check = [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]];
+  for(let i = 0; i < check.length; i++){
+    if(currX + check[i][0] === targX && currY + check[i][1] === targY){
+      return true;
+    }
+  }
+  return false;
 } 
 
-function pawnLogic(curr,targ) {
-
+function pawnLogic(currX,currY,targX,targY) {
+  let direction = chance === "w" ? -1 : 1;
+  //for 1 forward
+  if(targX === currX + direction && targY === currY && board[targX][targY] === ""){
+    return true;
+  }
+  //for 2 forward from initial position
+  if((chance === "w" && currX === 6) || (chance === "b" && currX === 1)){
+    if(targX === currX + 2*direction && targY === currY && board[targX][targY] === "" && board[currX + direction][currY] === ""){
+      return true;
+    }
+  }
+  //for capture
+  if(targX === currX + direction && Math.abs(targY - currY) === 1){
+    if(board[targX][targY] !== "" && board[targX][targY][0] !== chance){
+      return true;
+    }
+  }
+  return false; 
 }
 
 function isValidMove(curr,targCell) {
@@ -164,15 +187,15 @@ function isValidMove(curr,targCell) {
     if(currPiece === "k"){
       return kingLogic(currX,currY,targX,targY);
     }else if(currPiece === "q"){
-      return true;
+      return queenLogic(currX,currY,targX,targY);
     }else if(currPiece === "r"){
       return rookLogic(currX,currY,targX,targY);
     } else if(currPiece === "b"){
       return bishopLogic(currX,currY,targX,targY);
     }else if(currPiece === "n"){
-      return true;
+      return knightLogic(currX,currY,targX,targY);
     }else{
-      return true;
+      return pawnLogic(currX,currY,targX,targY);
     }
   }
   return false;
