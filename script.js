@@ -54,38 +54,32 @@ for(let i of addTo) {
   }
 } 
 
-// b->for black && w->for white
+//code for drag and drop functionality
 let draggedPiece = null;
 
-function box(target) {
-  draggedPiece = document.getElementById(target);
-  let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
-
-draggedPiece.addEventListener("mousedown", (e) => {
-  isDragging = true;
-  offsetX = e.clientX - draggedPiece.offsetLeft;
-  offsetY = e.clientY - draggedPiece.offsetTop;
+document.getElementById("chessboard").addEventListener("dragstart", (e) => {
+  const target = e.target;
+  if(target.tagName === "IMG"){ 
+    draggedPiece = target;
+    console.log("#######");
+    console.log((target));
+  }
 });
 
-document.addEventListener("mousemove", (e) => {
-  if (!isDragging) return;
-
-  draggedPiece.style.left = (e.clientX - offsetX) + "px";
-  draggedPiece.style.top = (e.clientY - offsetY) + "px";
+document.getElementById("chessboard").addEventListener("dragover", (e) => {
+  e.preventDefault();
 });
 
-document.addEventListener("mouseup", () => {
-  isDragging = false;
+document.getElementById("chessboard").addEventListener("drop", (e) => {
+  e.preventDefault();
+  if(e.target.id.substring(0,4)==='cell' && draggedPiece) {
+    draggedPiece.parentNode.removeChild(draggedPiece);
+    e.target.appendChild(draggedPiece);
+    console.log(e.target);
+  }
+  draggedPiece = null;
 });
-
-}
-
 
 document.getElementById("chessboard").addEventListener("click", (e) => {
-  const target = e.target;
-  console.log("Clicked element:", target);
-  console.log(target.id);
-  box(target.id);
+  console.log(e.target);
 });

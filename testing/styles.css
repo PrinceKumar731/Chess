@@ -1,0 +1,16 @@
+.box {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed black;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.item {
+  background: steelblue;
+  color: white;
+  padding: 10px;
+  cursor: grab;
+}
