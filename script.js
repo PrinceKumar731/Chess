@@ -86,7 +86,7 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
     let currY = parseInt(draggedPiece.parentNode.id[5]);
     let targX = parseInt(cell.id[4]);
     let targY = parseInt(cell.id[5]);
-    
+
     board[targX][targY]=board[currX][currY];
     board[currX][currY]="";
 
@@ -102,24 +102,40 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
 
 
 //chess pieces logic
-
-function kingLogic(curr,targCell,currX,currY,targX,targY) {
-  if(board[targX][targY] !== "" && board[targX][targY][0] === chance)return false;  
+function kingLogic(currX,currY,targX,targY) {
   return  (Math.abs(currX - targX) <= 1 && Math.abs(currY - targY) <= 1);
 }
 
-function queenLogic(curr,targCell,currX,currY,targX,targY) {
-
+function queenLogic(currX,currY,targX,targY) {
+  if(currX === targX || currY === targY)
+    return rookLogic(currX,currY,targX,targY);
+  else
+    return bishopLogic(currX,currY,targX,targY);
 }
 
-function rookLogic(curr,targ) {
-  // if(targCell.firstElementChild && targCell.firstElementChild.className[0] === chance)return false;
-  // if(currX !== targX || currY !== targY)return false;
-  // for(let i = Math.min(currX,targX)+1; i < Math.max(currX,targX); i++){
+function rookLogic(currX,currY,targX,targY) {
+  if(currX !== targX && currY !== targY)return false;
+  for(let i = Math.min(currX,targX)+1; i < Math.max(currX,targX); i++){
+    if(board[i][currY] !== "")return false;
+  }
+  for(let j = Math.min(currY,targY)+1; j < Math.max(currY,targY); j++){
+    if(board[currX][j] !== "")return false;
+  }
+  return true;
 }
 
-function bishopLogic(curr,targ) {
-
+function bishopLogic(currX,currY,targX,targY) {
+  if(Math.abs(currX - targX) !== Math.abs(currY - targY))return false;
+  let dx = currX > targX ? -1 : 1;
+  let dy = currY > targY ? -1 : 1;
+  let x = currX + dx;
+  let y = currY + dy;
+  while(x!=targX && y!=targY){
+    if(board[x][y] !== "")return false;
+    x += dx;
+    y += dy;
+  }
+  return true;
 } 
 
 function knightLogic(curr,targ) {
@@ -131,6 +147,8 @@ function pawnLogic(curr,targ) {
 }
 
 function isValidMove(curr,targCell) {
+  console.log("hjello wiorld");
+  
   if(curr.className[0] === chance){
 
     let currX = parseInt(curr.parentNode.id[4]);
@@ -139,15 +157,18 @@ function isValidMove(curr,targCell) {
     let targY = parseInt(targCell.id[5]);
 
     let currPiece = curr.className[1];
+    console.log(board[targX][targY]);
+    
+    if(board[targX][targY] !== "" && board[targX][targY][0] === chance)return false;  
     
     if(currPiece === "k"){
-      return kingLogic(curr,targCell,currX,currY,targX,targY);
+      return kingLogic(currX,currY,targX,targY);
     }else if(currPiece === "q"){
       return true;
     }else if(currPiece === "r"){
-      return true;
+      return rookLogic(currX,currY,targX,targY);
     } else if(currPiece === "b"){
-      return true;
+      return bishopLogic(currX,currY,targX,targY);
     }else if(currPiece === "n"){
       return true;
     }else{
