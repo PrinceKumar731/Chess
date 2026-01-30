@@ -1,10 +1,14 @@
 const darkSquareColor = "#7b945a";
 const lightSquareColor = "#eaecd3";
+const sound = new Audio("move-self.mp3");
 const board =  [];
 
 let chance = "b";
 let whiteTime = 600; 
 let blackTime = 600;
+let isBlackCheck = false;
+let isWhiteCheck = false;
+let becomeQueen = false;
 
 for(let i = 0; i < 8; i++) {
     board[i]=[]
@@ -95,7 +99,13 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
     if (cell.firstElementChild) {
       cell.removeChild(cell.firstElementChild);
     }
+    if(becomeQueen){
+      draggedPiece.src = `pieces/${chance}q.png`;
+      draggedPiece.className = `${chance}q`;
+      becomeQueen = false;
+    }
     cell.appendChild(draggedPiece);
+    sound.play();
     chance = chance === "b" ? "w" : "b";
     if(chance === "w") whiteTimer();
     else blackTimer();
@@ -156,6 +166,7 @@ function pawnLogic(currX,currY,targX,targY) {
   let direction = chance === "w" ? -1 : 1;
   //for 1 forward
   if(targX === currX + direction && targY === currY && board[targX][targY] === ""){
+    if(targX===0 || targX===7)becomeQueen = true;
     return true;
   }
   //for 2 forward from initial position
