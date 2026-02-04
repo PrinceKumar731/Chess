@@ -29,6 +29,14 @@ body {
   margin-bottom: 20px;
 }
 
+.sidebar #navButton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: bolder;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 .sidebar button {
   background: none;
   border: none;
@@ -36,6 +44,7 @@ body {
   padding: 10px;
   text-align: left;
   cursor: pointer;
+  width: ;
 }
 
 .sidebar button:hover {
@@ -48,7 +57,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 1px;
 }
 
 #black-timer,
