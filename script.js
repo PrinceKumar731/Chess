@@ -227,6 +227,21 @@ function isValidMove(curr,targCell) {
   return false;
 }
 
+//navbar shrink
+document.getElementsByClassName("logo")[0].addEventListener("click", function() {
+  const sidebar = document.querySelector(".sidebar");
+  sidebar.style.display = "none";
+  const navbar = document.querySelector(".navbar");
+  navbar.style.display = "flex";
+});
+
+document.getElementsByClassName("nav-logo")[0].addEventListener("click", function() {
+  const sidebar = document.querySelector(".sidebar");
+  sidebar.style.display = "flex";
+  const navbar = document.querySelector(".navbar");
+  navbar.style.display = "none";
+});
+
 
 //add timer logic
 
