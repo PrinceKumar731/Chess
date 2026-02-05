@@ -66,8 +66,8 @@ for(let i of addTo) {
   }
 } 
 
-//code for drag and drop functionality
 let draggedPiece = null;
+let touchStartCell = null;
 
 document.getElementById("chessboard").addEventListener("dragstart", (e) => {
   const target = e.target;
@@ -88,33 +88,86 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
   if (!cell || !draggedPiece) return;
 
   if (isValidMove(draggedPiece, cell)) {
-
-    let currX = parseInt(draggedPiece.parentNode.id[4]);
-    let currY = parseInt(draggedPiece.parentNode.id[5]);
-    let targX = parseInt(cell.id[4]);
-    let targY = parseInt(cell.id[5]);
-
-    board[targX][targY]=board[currX][currY];
-    board[currX][currY]="";
-
-    if (cell.firstElementChild) {
-      cell.removeChild(cell.firstElementChild);
-    }
-    if(becomeQueen){
-      draggedPiece.src = `pieces/${chance}q.png`;
-      draggedPiece.className = `${chance}q`;
-      becomeQueen = false;
-    }
-    cell.appendChild(draggedPiece);
-    sound.play();
-    chance = chance === "b" ? "w" : "b";
-    changeTimerColor()
-    if(chance === "w") whiteTimer();
-    else blackTimer();
+    movePiece(draggedPiece, cell);
   }
   draggedPiece = null;
 });
 
+document.getElementById("chessboard").addEventListener("touchstart", (e) => {
+  const target = e.target;
+  if(target.tagName === "IMG"){
+    draggedPiece = target;
+    touchStartCell = target.parentNode;
+    target.style.opacity = "0.5";
+    e.preventDefault();
+  }
+});
+
+document.getElementById("chessboard").addEventListener("touchmove", (e) => {
+  if (!draggedPiece) return;
+  e.preventDefault();
+  
+  const touch = e.touches[0];
+  const element = document.elementFromPoint(touch.clientX, touch.clientY);
+  
+  document.querySelectorAll(".cell").forEach(cell => {
+    cell.style.border = "";
+  });
+  
+  const cell = element?.closest(".cell");
+  if (cell && draggedPiece && isValidMove(draggedPiece, cell)) {
+    cell.style.border = "3px solid #8fbf5f";
+  }
+});
+
+document.getElementById("chessboard").addEventListener("touchend", (e) => {
+  if (!draggedPiece) return;
+  
+  draggedPiece.style.opacity = "1";
+  
+  const touch = e.changedTouches[0];
+  const element = document.elementFromPoint(touch.clientX, touch.clientY);
+  const cell = element?.closest(".cell");
+  
+  document.querySelectorAll(".cell").forEach(cell => {
+    cell.style.border = "";
+  });
+  
+  if (cell && draggedPiece && isValidMove(draggedPiece, cell)) {
+    movePiece(draggedPiece, cell);
+  }
+  
+  draggedPiece = null;
+  touchStartCell = null;
+});
+
+function movePiece(piece, targetCell) {
+  let currX = parseInt(piece.parentNode.id[4]);
+  let currY = parseInt(piece.parentNode.id[5]);
+  let targX = parseInt(targetCell.id[4]);
+  let targY = parseInt(targetCell.id[5]);
+
+  board[targX][targY] = board[currX][currY];
+  board[currX][currY] = "";
+
+  if (targetCell.firstElementChild) {
+    targetCell.removeChild(targetCell.firstElementChild);
+  }
+  
+  if(becomeQueen){
+    piece.src = `pieces/${chance}q.png`;
+    piece.className = `${chance}q`;
+    becomeQueen = false;
+  }
+  
+  targetCell.appendChild(piece);
+  sound.play();
+  chance = chance === "b" ? "w" : "b";
+  changeTimerColor();
+  
+  if(chance === "w") whiteTimer();
+  else blackTimer();
+}
 //choose opponent to choose game type
 document.addEventListener("DOMContentLoaded", () => {
   const chooseGame = document.querySelector(".choose-game");
