@@ -130,20 +130,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //choose game time 
 document.querySelector(".choose-game-type").addEventListener("click", (e) => {
-  console.log(e.target.classList);
+  console.log(e.target);
   if(e.target.classList.contains("to-play")){
     timerInterval =  parseInt(e.target.id.replace("min",""));
     whiteTime = parseInt(e.target.id.replace("min","")) * 60;
     blackTime = parseInt(e.target.id.replace("min","")) * 60;
     console.log(timerInterval);
   }
+  if(e.target.parentNode.classList.contains("to-play")){
+    timerInterval =  parseInt(e.target.parentNode.id.replace("min",""));
+    whiteTime = parseInt(e.target.parentNode.id.replace("min","")) * 60;
+    blackTime = parseInt(e.target.parentNode.id.replace("min","")) * 60;
+    console.log(timerInterval);
+  }
 });
+
+//change time at beginning of game
+function changeTimeStart() {
+  document.getElementById("white-timer").innerHTML = giveCurrTime(whiteTime);
+  document.getElementById("black-timer").innerHTML = giveCurrTime(blackTime);
+}
+
+//give curent remaining time
+function giveCurrTime(currTime){
+  return ` ${Math.floor(currTime/60)<10 ? "0" + Math.floor(currTime/60) : Math.floor(currTime/60)}:${(currTime%60).toString().padStart(2, '0')}`
+}
 
 //press start button
 document.getElementById("press-start-button").addEventListener("click", (e) => {
   const chooseGameType = document.querySelector(".choose-game-type");
   chooseGameType.style.display = "none";
-  document.querySelector(".game-start").style.display = "flex";
+  document.querySelector(".right-panel").style.display = "none";
+  changeTimeStart();
   blackTimer();
 });
 
@@ -286,7 +304,7 @@ async function whiteTimer() {
   if (whiteTime > 0) {
     whiteTime--;
     await sleep(1000);
-    document.getElementById("white-timer").innerText = ` ${Math.floor(whiteTime/60)<10 ? "0" + Math.floor(whiteTime/60) : Math.floor(whiteTime/60)}:${(whiteTime%60).toString().padStart(2, '0')}`;
+    document.getElementById("white-timer").innerText = giveCurrTime(whiteTime);
     if(chance === "w") whiteTimer();
   }
 }
@@ -295,7 +313,7 @@ async function blackTimer() {
   if (blackTime > 0) {
     blackTime--;
     await sleep(1000);
-    document.getElementById("black-timer").innerText = ` ${Math.floor(blackTime/60)<10 ? "0" + Math.floor(blackTime/60) : Math.floor(blackTime/60)}:${(blackTime%60).toString().padStart(2, '0')}`;
+    document.getElementById("black-timer").innerText = giveCurrTime(blackTime);
     if(chance === "b") blackTimer();
   }
 }
