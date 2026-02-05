@@ -9,6 +9,7 @@ let blackTime = 600;
 let isBlackCheck = false;
 let isWhiteCheck = false;
 let becomeQueen = false;
+let timerInterval = 10;
 
 for(let i = 0; i < 8; i++) {
     board[i]=[]
@@ -112,6 +113,38 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
     else blackTimer();
   }
   draggedPiece = null;
+});
+
+//choose opponent to choose game type
+document.addEventListener("DOMContentLoaded", () => {
+  const chooseGame = document.querySelector(".choose-game");
+  const chooseGameType = document.querySelector(".choose-game-type");
+  document.getElementById("play-online").addEventListener("click", (e) => {
+    console.log(e.currentTarget);
+    if (e.currentTarget.id === "play-online") {
+      chooseGame.style.display = "none";
+      chooseGameType.style.display = "flex";
+    }
+  });
+});
+
+//choose game time 
+document.querySelector(".choose-game-type").addEventListener("click", (e) => {
+  console.log(e.target.classList);
+  if(e.target.classList.contains("to-play")){
+    timerInterval =  parseInt(e.target.id.replace("min",""));
+    whiteTime = parseInt(e.target.id.replace("min","")) * 60;
+    blackTime = parseInt(e.target.id.replace("min","")) * 60;
+    console.log(timerInterval);
+  }
+});
+
+//press start button
+document.getElementById("press-start-button").addEventListener("click", (e) => {
+  const chooseGameType = document.querySelector(".choose-game-type");
+  chooseGameType.style.display = "none";
+  document.querySelector(".game-start").style.display = "flex";
+  blackTimer();
 });
 
 //function to change timer colour
