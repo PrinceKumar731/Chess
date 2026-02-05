@@ -118,10 +118,10 @@ document.getElementById("chessboard").addEventListener("drop", (e) => {
 function changeTimerColor(){
   const currTimeElement = chance === "w" ? document.getElementById("white-timer") : document.getElementById("black-timer");
   const otherTimeElement = chance === "w" ? document.getElementById("black-timer") : document.getElementById("white-timer");
-  currTimeElement.style.color = "white";
-  otherTimeElement.style.color = "black";
-  currTimeElement.style.backgroundColor = "black";
-  otherTimeElement.style.backgroundColor = "white";
+  otherTimeElement.style.color = "white";
+  currTimeElement.style.color = "black";
+  otherTimeElement.style.backgroundColor = "black";
+  currTimeElement.style.backgroundColor = "white";
 }
 
 
